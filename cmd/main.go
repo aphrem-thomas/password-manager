@@ -14,7 +14,7 @@ func main() {
 	// fmt.Println(cr.GetAccount(id))
 
 	r := chi.NewRouter()
-	r.Route("/user/{userId}", handlers.UserHandler)
+	r.Route("/user", handlers.UserHandler)
 
 	http.ListenAndServe(":3000", r)
 
