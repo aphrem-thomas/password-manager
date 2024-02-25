@@ -10,4 +10,5 @@ type AccountRepository interface {
 	AddAccount(aggregates.Account) error
 	DeleteAccount(aggregates.Account) error
 	UpdateAccount(aggregates.Account) error
+	GetAllAccounts() ([]aggregates.Account, error)
 }

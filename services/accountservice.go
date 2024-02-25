@@ -40,7 +40,11 @@ func (ac *AccountService) GetAccount(id uuid.UUID) (aggregates.Account, error) {
 	return ac.accounts.GetAccount(id)
 }
 
-func (ac *AccountService) AddAccount() error {
-	acn, _ := aggregates.NewAccount("Aphrem Thomas", "aphrem@thomasaphrem.com", "fdadsfafr34ewr34re", "adsfasdfcoijermlkdfj234324")
+func (ac *AccountService) GetAllAccounts() ([]aggregates.Account, error) {
+	return ac.accounts.GetAllAccounts()
+}
+
+func (ac *AccountService) AddAccount(name string, email string, pwd string, hash string) error {
+	acn, _ := aggregates.NewAccount(name, email, pwd, hash)
 	return ac.accounts.AddAccount(*acn)
 }

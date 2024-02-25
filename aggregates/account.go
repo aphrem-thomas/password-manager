@@ -37,6 +37,10 @@ func (ac *Account) GetId() uuid.UUID {
 	return ac.user.Id
 }
 
+func (ac *Account) GetUser() entities.User {
+	return *ac.user
+}
+
 func (ac *Account) SetId(id uuid.UUID) {
 	if ac.user == nil {
 		ac.user = &entities.User{}
