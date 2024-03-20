@@ -20,7 +20,8 @@ func UserHandler(r chi.Router) {
 	r.Get("/", func(rw http.ResponseWriter, r *http.Request) {
 		res, _ := accountService.GetAllAccounts()
 		fmt.Println(res[0].GetUser())
-		rw.Write([]byte("request from " + chi.URLParam(r, "userId")))
+		rest, _ := json.Marshal(res[0].GetUser())
+		rw.Write([]byte(rest))
 	})
 	r.Get("/{userId}", func(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte("request from " + chi.URLParam(r, "userId")))
