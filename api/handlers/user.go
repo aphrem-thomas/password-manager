@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/aphrem-thomas/password-manager/services"
+	"github.com/aphrem-thomas/password-manager/utils"
 	"github.com/go-chi/chi"
 )
 
@@ -18,6 +19,8 @@ type NewUserInfo struct {
 func UserHandler(r chi.Router) {
 	accountService, _ := services.NewAccountService(services.WithMemoryAccountRepository())
 	r.Get("/", func(rw http.ResponseWriter, r *http.Request) {
+		user := r.Context().Value(utils.UserName)
+		fmt.Println("user is:", user)
 		res, _ := accountService.GetAllAccounts()
 		fmt.Println(res[0].GetUser())
 		rest, _ := json.Marshal(res[0].GetUser())
