@@ -7,29 +7,22 @@ import (
 
 type Account struct {
 	user *entities.User
-	data []*entities.Passwords
 }
 
 // NewAccount is a factory function
 func NewAccount(name string, email string, pwdHash string, token string) (*Account, error) {
+	recordId := uuid.New()
 	userInfo := &entities.User{
-		Name:    name,
-		Id:      uuid.New(),
-		Email:   email,
-		PwdHash: pwdHash,
-		Token:   token,
+		Name:             name,
+		Id:               uuid.New(),
+		Email:            email,
+		PwdHash:          pwdHash,
+		Token:            token,
+		PasswordRecordId: recordId,
 	}
-	var userPassInfo []*entities.Passwords
-	userPassInfo = append(userPassInfo, &entities.Passwords{
-		Id:      uuid.New(),
-		Site:    "",
-		Email:   "",
-		Name:    "",
-		PwdHash: "",
-	})
+
 	return &Account{
 		user: userInfo,
-		data: userPassInfo,
 	}, nil
 }
 
