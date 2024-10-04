@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/aphrem-thomas/password-manager/api/handlers"
@@ -17,7 +18,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middlewares.TestMiddleware)
 	r.Route("/user", handlers.UserHandler)
-
+	fmt.Println("listening port 3000")
 	http.ListenAndServe(":3000", r)
 
 }

@@ -17,7 +17,7 @@ type NewUserInfo struct {
 }
 
 func UserHandler(r chi.Router) {
-	accountService, _ := services.NewAccountService(services.WithMemoryAccountRepository())
+	accountService, _ := services.NewAccountService(services.WithDBAccountRepository())
 	r.Get("/", func(rw http.ResponseWriter, r *http.Request) {
 		user := r.Context().Value(utils.UserName)
 		fmt.Println("user is:", user)

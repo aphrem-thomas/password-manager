@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/aphrem-thomas/password-manager/aggregates"
 	account "github.com/aphrem-thomas/password-manager/domains/accounts"
+	"github.com/aphrem-thomas/password-manager/domains/accounts/db"
 	"github.com/aphrem-thomas/password-manager/domains/accounts/memory"
 	"github.com/google/uuid"
 )
@@ -33,6 +34,10 @@ func WithAccountRepository(ac account.AccountRepository) AccountConfiguration {
 
 func WithMemoryAccountRepository() AccountConfiguration {
 	ac := memory.New()
+	return WithAccountRepository(ac)
+}
+func WithDBAccountRepository() AccountConfiguration {
+	ac := db.New()
 	return WithAccountRepository(ac)
 }
 
