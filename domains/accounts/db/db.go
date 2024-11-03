@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 
 	"github.com/aphrem-thomas/password-manager/aggregates"
@@ -25,9 +26,10 @@ type User struct {
 }
 
 func New() *DbRepository {
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable"
+	dsn := "host=db user=user password=user dbname=pw_manager port=5432 sslmode=disable"
 	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	db.AutoMigrate(&User{})
+	fmt.Println("created db")
 	return &DbRepository{
 		db: db,
 	}
@@ -60,11 +62,12 @@ func aggregateToDbUser(aUser aggregates.Account) *User {
 
 func (mr *DbRepository) AddAccount(ac aggregates.Account) error {
 	user := aggregateToDbUser(ac)
-	existingUser := mr.db.First(user)
+	existingUser := mr.db.Where("email = ?", &user.Email).First(user)
+	fmt.Println("in add account db, existing user with email", existingUser.RowsAffected)
 	if existingUser.RowsAffected == 0 {
-    
+		fmt.Println("db is", mr.db)
 		mr.db.Create(user)
-		return nil 
+		return nil
 	} else {
 		return errors.New("account already exist")
 	}

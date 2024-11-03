@@ -37,7 +37,10 @@ func UserHandler(r chi.Router) {
 			rw.WriteHeader(http.StatusBadRequest)
 			rw.Write([]byte(err.Error()))
 		} else {
-			accountService.AddAccount(*user.Name, *user.Email, *user.Password, *user.Password)
+			if err := accountService.AddAccount(*user.Name, *user.Email, *user.Password, *user.Password); err != nil {
+				rw.WriteHeader(http.StatusConflict)
+				return
+			}
 			rw.WriteHeader(http.StatusOK)
 		}
 		fmt.Println(*user.Email)

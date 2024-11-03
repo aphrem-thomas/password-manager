@@ -32,8 +32,9 @@ func TestMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var ctx context.Context
 		userName := ""
-		fmt.Println("in middleware")
+		fmt.Println("in middleware request -->", r)
 		tokenString := r.Header.Get("Authorization")
+		fmt.Println("token string", tokenString)
 		t := strings.Replace(tokenString, "Bearer ", "", -1)
 		verifiedToken, err := VerifyToken(t)
 		if err != nil {
